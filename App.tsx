@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthStack } from './Navigation/AuthStack';
-import { MainStack } from './Navigation/MainStack';
+import { AuthStack } from './src/Navigation/AuthStack';
+import { MainStack } from './src/Navigation/MainStack';
 
 export default function App() {
   // TODO: Mudar para false depois de testar

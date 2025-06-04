@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 interface NovoAlertaModalProps {
   visible: boolean;
@@ -13,18 +12,8 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
   const [mensagem, setMensagem] = useState('');
   const [nivelUrgencia, setNivelUrgencia] = useState('Baixo');
 
-  const tiposEvento = [
-    { id: 'enchente', label: 'Enchente', icon: 'water-outline' },
-    { id: 'vento-forte', label: 'Vento Forte', icon: 'rainy-outline' },
-    { id: 'incendio', label: 'Incêndio Florestal', icon: 'flame-outline' }
-  ];
-  
-  const niveisUrgencia = [
-    { id: 'baixo', label: 'Baixo' },
-    { id: 'medio', label: 'Médio' },
-    { id: 'alto', label: 'Alto' },
-    { id: 'critico', label: 'Crítico' }
-  ];
+  const tiposEvento = ['Enchente', 'Vento Forte', 'Incêndio Florestal'];
+  const niveisUrgencia = ['Baixo', 'Médio', 'Alto', 'Crítico'];
 
   const handleSave = () => {
     onSave({
@@ -32,6 +21,16 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
       mensagem,
       nivelUrgencia
     });
+    setEvento('Enchente');
+    setMensagem('');
+    setNivelUrgencia('Baixo');
+    onClose();
+  };
+
+  const handleCancel = () => {
+    setEvento('Enchente');
+    setMensagem('');
+    setNivelUrgencia('Baixo');
     onClose();
   };
 
@@ -41,25 +40,21 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Novo Alerta</Text>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.closeButton}>×</Text>
+            <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>×</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.formGroup}>
-            <Text style={styles.label}>Evento *</Text>            <View style={styles.buttonGroup}>
-              {tiposEvento.map(({ id, label, icon }) => (
+            <Text style={styles.label}>Evento *</Text>
+            <View style={styles.buttonGroup}>
+              {tiposEvento.map((tipo) => (
                 <TouchableOpacity
-                  key={id}
-                  style={[styles.button, evento === label && styles.buttonActive]}
-                  onPress={() => setEvento(label)}>
-                  <Ionicons 
-                    name={icon} 
-                    size={24} 
-                    style={[styles.eventIcon, evento === label && styles.iconActive]} 
-                  />
-                  <Text style={[styles.buttonText, evento === label && styles.buttonTextActive]}>
-                    {label}
+                  key={tipo}
+                  style={[styles.button, evento === tipo && styles.buttonActive]}
+                  onPress={() => setEvento(tipo)}>
+                  <Text style={[styles.buttonText, evento === tipo && styles.buttonTextActive]}>
+                    {tipo}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -70,30 +65,32 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
             <Text style={styles.label}>Mensagem *</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
-              placeholder="Digite a mensagem do alerta..."
+              placeholder=""
               value={mensagem}
               onChangeText={setMensagem}
               multiline
               numberOfLines={4}
+              placeholderTextColor="#999"
             />
           </View>
 
           <View style={styles.formGroup}>
             <Text style={styles.label}>Nível de Urgência</Text>
-            <View style={styles.buttonGrid}>              {niveisUrgencia.map(({ id, label }) => (
+            <View style={styles.buttonGrid}>
+              {niveisUrgencia.map((nivel) => (
                 <TouchableOpacity
-                  key={id}
+                  key={nivel}
                   style={[
                     styles.urgencyButton,
-                    nivelUrgencia === label && styles.buttonActive
+                    nivelUrgencia === nivel && styles.buttonActive
                   ]}
-                  onPress={() => setNivelUrgencia(label)}>
+                  onPress={() => setNivelUrgencia(nivel)}>
                   <Text
                     style={[
                       styles.buttonText,
-                      nivelUrgencia === label && styles.buttonTextActive
+                      nivelUrgencia === nivel && styles.buttonTextActive
                     ]}>
-                    {label}
+                    {nivel}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -101,7 +98,7 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
               <Text style={styles.cancelButtonText}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -120,114 +117,134 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 20,
-    width: '90%',
-    maxWidth: 500,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 24,
+    width: '100%',
+    maxWidth: 400,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
   },
   closeButton: {
+    padding: 4,
+  },
+  closeButtonText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#666',
   },
   formGroup: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   label: {
     fontSize: 14,
-    marginBottom: 8,
+    fontWeight: '500',
+    marginBottom: 12,
     color: '#333',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
-    padding: 8,
-    fontSize: 16,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    backgroundColor: '#FAFAFA',
+    color: '#333',
   },
   textArea: {
-    height: 100,
+    height: 80,
     textAlignVertical: 'top',
   },
   buttonGroup: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -4,
+    gap: 8,
   },
   button: {
     flex: 1,
-    margin: 4,
-    padding: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   buttonActive: {
     backgroundColor: '#1976D2',
     borderColor: '#1976D2',
   },
   buttonText: {
+    fontSize: 12,
     color: '#666',
+    textAlign: 'center',
   },
   buttonTextActive: {
-    color: 'white',
+    color: '#FFFFFF',
+    fontWeight: '500',
   },
   buttonGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -4,
+    gap: 8,
   },
   urgencyButton: {
-    flex: 1,
-    margin: 4,
-    padding: 8,
+    width: '48%',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
     alignItems: 'center',
-    minWidth: '45%',
+    backgroundColor: '#FFFFFF',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 20,
+    gap: 12,
+    marginTop: 24,
   },
   cancelButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginRight: 8,
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   cancelButtonText: {
+    fontSize: 14,
     color: '#666',
+    fontWeight: '500',
   },
   saveButton: {
+    flex: 1,
     backgroundColor: '#1976D2',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
   },
   saveButtonText: {
-    color: 'white',
-  },
-  eventIcon: {
-    marginBottom: 4,
-    color: '#666',
-  },
-  iconActive: {
-    color: '#FFF',
+    fontSize: 14,
+    color: '#FFFFFF',
+    fontWeight: '500',
   },
 });

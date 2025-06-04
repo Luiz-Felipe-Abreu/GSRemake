@@ -8,20 +8,30 @@ interface NovoSensorModalProps {
 }
 
 export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalProps) => {
-  const [tipoSensor, setTipoSensor] = useState('');
+  const [tipo, setTipo] = useState('');
   const [localizacao, setLocalizacao] = useState('');
   const [unidadeMedida, setUnidadeMedida] = useState('');
   const [status, setStatus] = useState('Ativo');
 
-  const statusOptions = ['Ativo', 'Inativo', 'Manutenção'];
-
   const handleSave = () => {
     onSave({
-      tipoSensor,
+      tipo,
       localizacao,
       unidadeMedida,
       status
     });
+    setTipo('');
+    setLocalizacao('');
+    setUnidadeMedida('');
+    setStatus('Ativo');
+    onClose();
+  };
+
+  const handleCancel = () => {
+    setTipo('');
+    setLocalizacao('');
+    setUnidadeMedida('');
+    setStatus('Ativo');
     onClose();
   };
 
@@ -31,8 +41,8 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
         <View style={styles.modalContent}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Novo Sensor</Text>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.closeButton}>×</Text>
+            <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>×</Text>
             </TouchableOpacity>
           </View>
 
@@ -41,8 +51,9 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
             <TextInput
               style={styles.input}
               placeholder="Ex: Temperatura, Umidade, Pressão..."
-              value={tipoSensor}
-              onChangeText={setTipoSensor}
+              value={tipo}
+              onChangeText={setTipo}
+              placeholderTextColor="#999"
             />
           </View>
 
@@ -53,6 +64,7 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
               placeholder="Ex: Prédio A - Sala 101"
               value={localizacao}
               onChangeText={setLocalizacao}
+              placeholderTextColor="#999"
             />
           </View>
 
@@ -63,6 +75,7 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
               placeholder="Ex: °C, %, mmHg..."
               value={unidadeMedida}
               onChangeText={setUnidadeMedida}
+              placeholderTextColor="#999"
             />
           </View>
 
@@ -77,16 +90,16 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.statusButton, status === 'Inativo' && styles.statusButtonActive]}
+                style={[styles.statusButton, status === 'Inativo' && styles.statusButtonInactive]}
                 onPress={() => setStatus('Inativo')}>
-                <Text style={[styles.statusButtonText, status === 'Inativo' && styles.statusButtonTextActive]}>
+                <Text style={[styles.statusButtonText, status === 'Inativo' && styles.statusButtonTextInactive]}>
                   Inativo
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.statusButton, status === 'Manutenção' && styles.statusButtonActive]}
+                style={[styles.statusButton, status === 'Manutenção' && styles.statusButtonMaintenance]}
                 onPress={() => setStatus('Manutenção')}>
-                <Text style={[styles.statusButtonText, status === 'Manutenção' && styles.statusButtonTextActive]}>
+                <Text style={[styles.statusButtonText, status === 'Manutenção' && styles.statusButtonTextMaintenance]}>
                   Manutenção
                 </Text>
               </TouchableOpacity>
@@ -94,7 +107,7 @@ export const NovoSensorModal = ({ visible, onClose, onSave }: NovoSensorModalPro
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
               <Text style={styles.cancelButtonText}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -113,90 +126,130 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 20,
-    width: '90%',
-    maxWidth: 500,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 24,
+    width: '100%',
+    maxWidth: 400,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
   },
   closeButton: {
+    padding: 4,
+  },
+  closeButtonText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#666',
   },
   formGroup: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   label: {
     fontSize: 14,
+    fontWeight: '500',
     marginBottom: 8,
     color: '#333',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
-    padding: 8,
-    fontSize: 16,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    backgroundColor: '#FAFAFA',
+    color: '#333',
   },
   statusGroup: {
-    marginBottom: 16,
+    marginBottom: 24,
   },
   statusButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 8,
   },
   statusButton: {
     flex: 1,
-    padding: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#ddd',
-    marginHorizontal: 4,
-    borderRadius: 4,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   statusButtonActive: {
     backgroundColor: '#1976D2',
     borderColor: '#1976D2',
   },
+  statusButtonInactive: {
+    backgroundColor: '#E0E0E0',
+    borderColor: '#E0E0E0',
+  },
+  statusButtonMaintenance: {
+    backgroundColor: '#E0E0E0',
+    borderColor: '#E0E0E0',
+  },
   statusButtonText: {
+    fontSize: 14,
     color: '#666',
   },
   statusButtonTextActive: {
-    color: 'white',
+    color: '#FFFFFF',
+    fontWeight: '500',
+  },
+  statusButtonTextInactive: {
+    color: '#666',
+  },
+  statusButtonTextMaintenance: {
+    color: '#666',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 20,
+    gap: 12,
   },
   cancelButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginRight: 8,
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   cancelButtonText: {
+    fontSize: 14,
     color: '#666',
+    fontWeight: '500',
   },
   saveButton: {
+    flex: 1,
     backgroundColor: '#1976D2',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
   },
   saveButtonText: {
-    color: 'white',
+    fontSize: 14,
+    color: '#FFFFFF',
+    fontWeight: '500',
   },
 });

@@ -5,14 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 import TelaEventos from '../Screens/TelaEventos';
 import TelaConfig from '../Screens/TelaConfig';
 import TelaDashboard from '../Screens/TelaDashboard';
+import TelaSensores from '../Screens/TelaSensores';
+import TelaAlertas from '../Screens/TelaAlertas';
+import { TabParamList } from '../Types/Types';
 
-type TabParamList = {
-  'Início': undefined;
-  'Sensores': undefined;
-  'Alertas': undefined;
-  'Eventos': undefined;
-  'Config': undefined;
-};
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const Stack = createNativeStackNavigator();
@@ -50,7 +46,7 @@ function MainTabs() {
       />
       <Tab.Screen
         name="Sensores"
-        component={TelaEventos}
+        component={TelaSensores}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="hardware-chip-outline" size={size} color={color} />
@@ -59,7 +55,7 @@ function MainTabs() {
       />
       <Tab.Screen
         name="Alertas"
-        component={TelaEventos}
+        component={TelaAlertas}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="warning-outline" size={size} color={color} />
