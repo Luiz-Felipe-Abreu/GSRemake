@@ -7,11 +7,13 @@ import TelaConfig from '../Screens/TelaConfig';
 import TelaDashboard from '../Screens/TelaDashboard';
 import TelaSensores from '../Screens/TelaSensores';
 import TelaAlertas from '../Screens/TelaAlertas';
-import { TabParamList } from '../Types/Types';
+import TelaPerfil from '../Screens/TelaPerfil';
+import TelaSobre from '../Screens/TelaSobre';
+import { TabParamList, RootStackParamList } from '../Types/Types';
 
 
 const Tab = createBottomTabNavigator<TabParamList>();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function MainTabs() {
   return (
@@ -91,6 +93,16 @@ export function MainStack() {
       <Stack.Screen 
         name="MainTabs" 
         component={MainTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Perfil" 
+        component={TelaPerfil}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Sobre" 
+        component={TelaSobre}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

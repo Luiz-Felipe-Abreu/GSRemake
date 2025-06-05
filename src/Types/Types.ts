@@ -5,6 +5,12 @@ export type TabParamList = {
   'Eventos': undefined;
   'Config': undefined;
 };
+
+export type RootStackParamList = {
+  MainTabs: undefined;
+  Perfil: undefined;
+  Sobre: undefined;
+};
 export interface Alerta {
   id: string;
   tipo: string;

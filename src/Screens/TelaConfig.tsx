@@ -4,8 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../Navigation/AuthStack';
+import type { RootStackParamList } from '../Types/Types';
 
-type ConfigScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
+type ConfigScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList> & 
+  NativeStackNavigationProp<RootStackParamList>;
 
 export default function TelaConfig() {
   const navigation = useNavigation<ConfigScreenNavigationProp>();
@@ -39,7 +41,10 @@ export default function TelaConfig() {
       <View style={styles.menuSection}>
         <Text style={styles.menuTitle}>Configurações</Text>
         
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('Perfil' as never)}
+        >
           <View style={styles.menuItemContent}>
             <Ionicons name="person-outline" size={24} color="#666" />
             <Text style={styles.menuItemText}>Perfil</Text>
@@ -47,7 +52,10 @@ export default function TelaConfig() {
           <Ionicons name="chevron-forward" size={24} color="#666" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('Sobre' as never)}
+        >
           <View style={styles.menuItemContent}>
             <Ionicons name="information-circle-outline" size={24} color="#666" />
             <Text style={styles.menuItemText}>Sobre</Text>
