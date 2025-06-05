@@ -29,8 +29,8 @@ function MainTabs() {
           fontSize: 20,
         },
         tabBarStyle: {
-          height: 60,
-          paddingBottom: 8,
+          height: 85,
+          paddingBottom: 25,
           paddingTop: 8,
           backgroundColor: '#FFF',
           borderTopWidth: 1,

@@ -11,12 +11,28 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../Navigation/AuthStack';
+import { useAuth } from '../Contexts/AuthContext';
 
 export default function TelaLogin() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogin = () => {
+    if (!email.trim() || !senha.trim()) {
+      setError('Por favor, preencha todos os campos');
+      return;
+    }
+    signIn();
+  };
+
+  const fillDemoCredentials = () => {
+    setEmail('admin@ecosafe.com');
+    setSenha('123456');
+  };
 
   return (
     <View style={styles.container}>
@@ -69,12 +85,14 @@ export default function TelaLogin() {
           </TouchableOpacity>
         </View>
 
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        
         {/* Botões */}
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.demoButton}>
+        <TouchableOpacity style={styles.demoButton} onPress={fillDemoCredentials}>
           <Ionicons name="flash-outline" size={20} color="#1976D2" />
           <Text style={styles.demoButtonText}>Preencher Demo</Text>
         </TouchableOpacity>
@@ -216,11 +234,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#666',
     fontSize: 14,
-  },
-  infoTextSmall: {
+  },  infoTextSmall: {
     textAlign: 'center',
     color: '#999',
     fontSize: 12,
     marginTop: 5,
+  },
+  errorText: {
+    color: '#D32F2F',
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });
