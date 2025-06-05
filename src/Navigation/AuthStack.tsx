@@ -2,11 +2,9 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TelaLogin from '../Screens/TelaLogin';
 import TelaCadastro from '../Screens/TelaCadastro';
+import { AuthStackParamList } from '../Types/Types';
 
-export type AuthStackParamList = {
-  Login: undefined;
-  Cadastro: undefined;
-};
+
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 

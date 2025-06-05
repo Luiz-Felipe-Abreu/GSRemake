@@ -9,7 +9,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../Navigation/AuthStack';
+import { AuthStackParamList } from '../Types/Types';
+
 
 export default function TelaCadastro() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
@@ -103,9 +104,8 @@ export default function TelaCadastro() {
           style={styles.loginLink}
           onPress={() => navigation.navigate('Login')}
         >
-          <Text style={styles.loginText}>
-            Já tem uma conta? <Text style={styles.loginTextHighlight}>Fazer login</Text>
-          </Text>
+          <Text style={styles.loginText}> Já tem uma conta? </Text>
+          <Text style={styles.loginTextHighlight}>Fazer login</Text>
         </TouchableOpacity>
 
         <View style={styles.securityInfo}>

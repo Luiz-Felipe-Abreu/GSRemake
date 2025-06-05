@@ -8,6 +8,12 @@ interface NovoEventoModalProps {
   onSave: (eventoData: any) => void;
 }
 
+export type EventoType = {
+  id: string;
+  label: string;
+  icon: keyof typeof Ionicons.glyphMap;
+};
+
 export const NovoEventoModal = ({ visible, onClose, onSave }: NovoEventoModalProps) => {
   const [tipoEvento, setTipoEvento] = useState('Enchente');
   const [local, setLocal] = useState('Centro de São Paulo');
@@ -15,11 +21,11 @@ export const NovoEventoModal = ({ visible, onClose, onSave }: NovoEventoModalPro
   const [tipoPersonalizado, setTipoPersonalizado] = useState('');
   const [detalhes, setDetalhes] = useState('');
 
-  const tiposEvento = [
-    { id: 'enchente', label: 'Enchente', icon: "water-outline" },
-    { id: 'incendio', label: 'Incêndio Florestal', icon: 'flame-outline' },
-    { id: 'vento', label: 'Vento Forte', icon: 'cloudy-outline' },
-    { id: 'tempestade', label: 'Tempestade', icon: 'thunderstorm-outline' }
+  const tiposEvento: EventoType[] = [
+    { id: 'enchente', label: 'Enchente', icon: 'water-outline' as const },
+    { id: 'incendio', label: 'Incêndio Florestal', icon: 'flame-outline' as const },
+    { id: 'vento', label: 'Vento Forte', icon: 'cloudy-outline' as const },
+    { id: 'tempestade', label: 'Tempestade', icon: 'thunderstorm-outline' as const }
   ];
 
   const locais = [
@@ -61,7 +67,7 @@ export const NovoEventoModal = ({ visible, onClose, onSave }: NovoEventoModalPro
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Novo Evento</Text>
             <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>×</Text>
+              <Ionicons name="close" size={24} color="#666" />
             </TouchableOpacity>
           </View>
 
@@ -189,14 +195,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#333',
-  },
-  closeButton: {
+  },  closeButton: {
     padding: 4,
-  },
-  closeButtonText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#666',
   },
   formGroup: {
     marginBottom: 20,

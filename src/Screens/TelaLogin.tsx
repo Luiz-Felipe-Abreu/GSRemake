@@ -10,8 +10,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AuthStackParamList } from '../Navigation/AuthStack';
+
 import { useAuth } from '../Contexts/AuthContext';
+import { AuthStackParamList } from '../Types/Types';
 
 export default function TelaLogin() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
@@ -27,7 +28,7 @@ export default function TelaLogin() {
       return;
     }
     signIn();
-  };
+  };  
 
   const fillDemoCredentials = () => {
     setEmail('admin@ecosafe.com');
@@ -36,7 +37,7 @@ export default function TelaLogin() {
 
   return (
     <View style={styles.container}>
-      {/* Logo e título */}
+      
       <View style={styles.header}>
         <View style={styles.logoContainer}>
           <Ionicons name="leaf-outline" size={40} color="#fff" />
@@ -45,12 +46,12 @@ export default function TelaLogin() {
         <Text style={[styles.subtitle, styles.subtitleWhite]}>Sistema de Monitoramento Ambiental</Text>
       </View>
 
-      {/* Formulário */}
+     
       <View style={styles.form}>
         <Text style={styles.title}>Bem-vindo!</Text>
         <Text style={styles.subtitle}>Faça login para continuar</Text>
 
-        {/* Campo de email */}
+       
         <View style={styles.inputContainer}>
           <Ionicons name="mail-outline" size={20} color="#666" style={styles.inputIcon} />
           <TextInput
@@ -61,9 +62,7 @@ export default function TelaLogin() {
             keyboardType="email-address"
             autoCapitalize="none"
           />
-        </View>
-
-        {/* Campo de senha */}
+        </View>        
         <View style={styles.inputContainer}>
           <Ionicons name="lock-closed-outline" size={20} color="#666" style={styles.inputIcon} />
           <TextInput
@@ -87,7 +86,6 @@ export default function TelaLogin() {
 
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         
-        {/* Botões */}
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Entrar</Text>
         </TouchableOpacity>
@@ -97,18 +95,16 @@ export default function TelaLogin() {
           <Text style={styles.demoButtonText}>Preencher Demo</Text>
         </TouchableOpacity>
 
-        {/* Link criar conta */}        <TouchableOpacity 
+        <TouchableOpacity 
           style={styles.createAccountButton}
           onPress={() => navigation.navigate('Cadastro')}
         >
-          <Text style={styles.createAccountText}>
-            Não tem uma conta? Criar conta
-          </Text>
+          <Text style={styles.createAccountText}>Não tem uma conta? Criar conta</Text>
         </TouchableOpacity>
 
-        {/* Texto informativo */}        <Text style={styles.infoText}>
-          <Text>✨</Text> Use qualquer email e senha
-        </Text>
+           <Text style={styles.infoText}>
+            ✨ Use qualquer email e senha
+          </Text>
         <Text style={styles.infoTextSmall}>
           Ou clique em "Preencher Demo" para testar
         </Text>

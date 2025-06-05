@@ -6,6 +6,11 @@ export type TabParamList = {
   'Config': undefined;
 };
 
+export type AuthStackParamList = {
+  Login: undefined;
+  Cadastro: undefined;
+};
+
 export type RootStackParamList = {
   MainTabs: undefined;
   Perfil: undefined;

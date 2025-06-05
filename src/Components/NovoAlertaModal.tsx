@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface NovoAlertaModalProps {
   visible: boolean;
@@ -41,7 +42,7 @@ export const NovoAlertaModal = ({ visible, onClose, onSave }: NovoAlertaModalPro
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Novo Alerta</Text>
             <TouchableOpacity onPress={handleCancel} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>×</Text>
+              <Ionicons name="close" size={24} color="#666" />
             </TouchableOpacity>
           </View>
 
@@ -144,11 +145,6 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 4,
-  },
-  closeButtonText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#666',
   },
   formGroup: {
     marginBottom: 20,

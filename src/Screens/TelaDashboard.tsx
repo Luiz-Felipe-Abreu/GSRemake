@@ -25,13 +25,11 @@ export default function TelaDashboard() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.mainContent}>
-        {/* Seção do título */}
         <View style={styles.titleSection}>
           <Text style={styles.contentTitle}>EcoSafe Dashboard</Text>
           <Text style={styles.contentSubtitle}>Monitoramento Ambiental em Tempo Real</Text>
         </View>
 
-        {/* Alertas ativos */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Alertas ativos ( {alertas.length} )</Text>
           
@@ -46,8 +44,6 @@ export default function TelaDashboard() {
             </View>
           ))}
         </View>
-
-        {/* Leituras recentes */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Leituras recentes</Text>
           
@@ -61,11 +57,9 @@ export default function TelaDashboard() {
             </View>
           ))}
         </View>
-
-        {/* Eventos recentes */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Eventos recentes</Text>
-          
+
           {eventos.map((evento) => (
             <View key={evento.id} style={[styles.eventoCard, { borderLeftColor: evento.cor }]}>
               <Text style={styles.eventoTitulo}>{evento.tipo}</Text>

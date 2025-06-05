@@ -8,7 +8,6 @@ export default function TelaSobre() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -19,9 +18,7 @@ export default function TelaSobre() {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Sobre o EcoSafe</Text>
       </View>
-
       <ScrollView style={styles.content}>
-        {/* App Info Section */}
         <View style={styles.appSection}>
           <View style={styles.logoContainer}>
             <Ionicons name="leaf" size={48} color="#1976D2" />
@@ -30,8 +27,6 @@ export default function TelaSobre() {
           <Text style={styles.appSubtitle}>Sistema de Monitoramento Ambiental</Text>
           <Text style={styles.versionText}>Versão 1.0.0 • Build 2024.01.15</Text>
         </View>
-
-        {/* About Project */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Sobre o Projeto</Text>
           <View style={styles.descriptionCard}>
@@ -46,8 +41,6 @@ export default function TelaSobre() {
             </Text>
           </View>
         </View>
-
-        {/* Main Features */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Recursos Principais</Text>
           <View style={styles.featuresGrid}>
@@ -77,8 +70,6 @@ export default function TelaSobre() {
             </View>
           </View>
         </View>
-
-        {/* Statistics */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Estatísticas</Text>
           <View style={styles.statsGrid}>
@@ -104,8 +95,6 @@ export default function TelaSobre() {
             </View>
           </View>
         </View>
-
-        {/* Technologies */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tecnologias Utilizadas</Text>
           <View style={styles.techCard}>
@@ -136,8 +125,6 @@ export default function TelaSobre() {
             </View>
           </View>
         </View>
-
-        {/* Development Team */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Equipe de Desenvolvimento</Text>
           <View style={styles.teamCard}>
@@ -185,7 +172,6 @@ export default function TelaSobre() {
           </View>
         </View>
 
-        {/* Footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>© 2025 EcoSafe Team • Desenvolvido com</Text>
           <View style={styles.heartContainer}>

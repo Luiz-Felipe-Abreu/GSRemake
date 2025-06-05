@@ -3,23 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { AuthStackParamList } from '../Navigation/AuthStack';
-import type { RootStackParamList } from '../Types/Types';
+import { useAuth } from '../Contexts/AuthContext';
+
+import type { AuthStackParamList, RootStackParamList } from '../Types/Types';
 
 type ConfigScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList> & 
   NativeStackNavigationProp<RootStackParamList>;
 
 export default function TelaConfig() {
   const navigation = useNavigation<ConfigScreenNavigationProp>();
+  const { signOut } = useAuth();
 
   const handleLogout = () => {
-    // TODO: Implement logout logic here (clear tokens, user data, etc)
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Login' }],
-      })
-    );
+    signOut();
   };
 
   return (
@@ -28,7 +24,6 @@ export default function TelaConfig() {
         <Text style={styles.headerTitle}>Configurações</Text>
       </View>
 
-      {/* Profile Section */}
       <View style={styles.profileSection}>
         <View style={styles.avatarContainer}>
           <Ionicons name="person" size={40} color="#fff" />
@@ -37,7 +32,6 @@ export default function TelaConfig() {
         <Text style={styles.profileEmail}>admin@ecosafe.com</Text>
       </View>
 
-      {/* Settings Menu */}
       <View style={styles.menuSection}>
         <Text style={styles.menuTitle}>Configurações</Text>
         
@@ -64,7 +58,6 @@ export default function TelaConfig() {
         </TouchableOpacity>
       </View>
 
-      {/* Logout Button */}
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Ionicons name="log-out-outline" size={24} color="#D32F2F" />
         <Text style={styles.logoutText}>Sair</Text>
